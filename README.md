@@ -1,32 +1,30 @@
-# React + TypeScript + Vite
+# ロボコンタイマー
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+ロボコンの試合用カウントダウンタイマー。進行は セッティング 1:00 → 試合 3:00（開始前に 3・2・1 のカウントダウン）。
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+pnpm install
+pnpm dev      # 開発サーバー
+pnpm build    # dist/ に静的ファイルを出力
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 操作
+
+1. `Space` でセッティング開始
+2. 0:00 で停止。`Space` で 3・2・1 のカウントダウン、続けて試合時間が始まる
+3. `R` でリセット（最初の段階に戻り、得点も 0 に）
+
+段階チップ（セッティング / 試合）をクリックするとその段階へ移動（計測中は不可）。得点は左下＝青、右下＝赤。
+
+| キー | 動作 |
+| --- | --- |
+| `Space` | 開始 / 一時停止 / 次の段階へ |
+| `R` | リセット |
+| `A` / `Z` | 青 +1 / −1 |
+| `S` / `X` | 青 +10 / −10 |
+| `K` / `M` | 赤 +1 / −1 |
+| `L` / `,` | 赤 +10 / −10 |
+
+## 設定
+
+右上の歯車ボタンから、時間（セッティング / スタート前カウントダウン / 試合、秒単位）、得点の刻み、キー割り当てを変更できる。内容は localStorage に保存される。初期値は `src/lib/settings.ts`。
